@@ -15,3 +15,9 @@ ltmain.sh
 m4/
 missing
 stamp-*
+.deps
+.dirstamp
+depcomp
+*.o
+
+eopkg_ng
