@@ -12,3 +12,4 @@
 #pragma once
 
 #define __eopkg_unused__ __attribute__((unused))
+#define __eopkg__inline__ __attribute__((always_inline))
