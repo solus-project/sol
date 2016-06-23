@@ -16,10 +16,9 @@
 
 int main(__eopkg_unused__ int argc, __eopkg_unused__ char **argv)
 {
-        EopkgContext *c = NULL;
+        autofree(EopkgContext) *c = NULL;
 
         c = eopkg_open();
-        eopkg_close(c);
 
         return EXIT_SUCCESS;
 }

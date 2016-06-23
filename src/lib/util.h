@@ -13,3 +13,18 @@
 
 #define __eopkg_unused__ __attribute__((unused))
 #define __eopkg_inline__ __attribute__((always_inline))
+
+/**
+ * Taken from libnica and about fourteen of my previous projects..
+ */
+
+#define DEF_AUTOFREE(N, C)                                                                         \
+        static inline void _autofree_func_##N(void *p)                                             \
+        {                                                                                          \
+                if (p && *(N **)p) {                                                               \
+                        C(*(N **)p);                                                               \
+                        (*(void **)p) = NULL;                                                      \
+                }                                                                                  \
+        }
+
+#define autofree(N) __attribute__((cleanup(_autofree_func_##N))) N

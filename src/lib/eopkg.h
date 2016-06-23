@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "util.h"
+
 /**
  * Handle to the underlying library instance
  */
@@ -25,3 +27,5 @@ EopkgContext *eopkg_open(void);
  * Close the library handle
  */
 void eopkg_close(EopkgContext *eopkg);
+
+DEF_AUTOFREE(EopkgContext, eopkg_close)
