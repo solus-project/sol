@@ -2,6 +2,10 @@ EXTRA_DIST = 		\
 	LICENSE.LGPL2.1 \
 	README.md
 
+AM_CPPFLAGS =			\
+	-I $(top_srcdir)/src 	\
+	-I $(top_srcdir)/src/lib
+
 AM_CFLAGS = 							\
 	-fstack-protector -Wall -pedantic			\
 	-Wstrict-prototypes -Wundef -fno-common 		\
@@ -14,6 +18,9 @@ bin_PROGRAMS = 		\
 	eopkg_ng
 
 eopkg_ng_SOURCES = 	\
+	src/lib/util.h	\
 	src/cli/main.c
 
+eopkg_ng_CFLAGS =	\
+	$(AM_CFLAGS)
 

@@ -9,11 +9,6 @@
  * of the License, or (at your option) any later version.
  */
 
-#include <stdlib.h>
+#pragma once
 
-#include "util.h"
-
-int main(__eopkg_unused__ int argc, __eopkg_unused__ char **argv)
-{
-        return EXIT_SUCCESS;
-}
+#define __eopkg_unused__ __attribute__((unused))
