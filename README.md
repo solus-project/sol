@@ -40,6 +40,13 @@ with a view towards transactional usage and global Solus philosophy such as
 *being stateless*. We'll add support for postinstalls but they'll be used
 sparingly, and where possible the PM will pick up the bits it needs to.
 
+**Advantages**
+
+Solus already knows the devices it will be on. These are 64-bit machines, i.e.
+x86_64. Therefore there are no **assumptions** for us to make. With this in
+mind, we'll be able to use C11 atomics, `mmap()` and friends, at will.
+
+
 License
 --------
 
