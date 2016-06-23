@@ -12,22 +12,34 @@
 #include <stdatomic.h>
 #include <stdlib.h>
 
+#include "eopkg-atomics.h"
 #include "eopkg.h"
 #include "util.h"
 
 struct EopkgContext {
-        atomic_int ref_count; /**<Current refcount for this handle */
+        eopkg_atomic_t eatom; /**<Integrate with atomic refcounts */
 };
+
+void eopkg_context_free(EopkgContext *self)
+{
+        free(self);
+}
 
 EopkgContext *eopkg_open(void)
 {
-        return NULL;
+        EopkgContext *c = NULL;
+
+        c = calloc(1, sizeof(struct EopkgContext));
+        if (!c) {
+                return NULL;
+        }
+        return eopkg_atomic_init((eopkg_atomic_t *)c, (eopkg_atomic_free)eopkg_context_free);
 }
 
 /**
  * Close the library handle
  */
-void eopkg_close(__eopkg_unused__ EopkgContext *eopkg)
+void eopkg_close(EopkgContext *eopkg)
 {
-        return;
+        eopkg_atomic_unref(eopkg);
 }
