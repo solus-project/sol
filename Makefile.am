@@ -18,7 +18,7 @@ noinst_LTLIBRARIES = 	\
 	libeopkg-ng.la
 
 bin_PROGRAMS = 		\
-	eopkg_ng
+	eopkg-ng
 
 # Core library
 libeopkg_ng_la_SOURCES = \
