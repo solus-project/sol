@@ -19,5 +19,8 @@ stamp-*
 .dirstamp
 depcomp
 *.o
+.libs
+*.la
+*.lo
 
 eopkg_ng
