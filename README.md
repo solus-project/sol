@@ -50,4 +50,6 @@ mind, we'll be able to use C11 atomics, `mmap()` and friends, at will.
 License
 --------
 
+Copyright © 2016 Ikey Doherty
+
 LGPL-2.1. We're going to expose a library for others to use....
