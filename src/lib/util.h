@@ -12,6 +12,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <sys/stat.h>
 
 #define __eopkg_unused__ __attribute__((unused))
