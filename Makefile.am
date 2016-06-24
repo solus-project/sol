@@ -26,6 +26,7 @@ bin_PROGRAMS = 		\
 libeopkg_ng_la_SOURCES = 	\
 	src/lib/eopkg.h		\
 	src/lib/eopkg.c		\
+	src/lib/eopkg-atomics.h	\
 	src/lib/util.h		\
 	src/lib/xml/entry.c	\
 	src/lib/xml/metadata.h	\
