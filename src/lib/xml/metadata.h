@@ -11,6 +11,8 @@
 
 #pragma once
 
+#include "util.h"
+
 typedef struct EopkgMetadata EopkgMetadata;
 
 /**
@@ -22,3 +24,5 @@ EopkgMetadata *eopkg_metadata_new(void);
  * Unref a given EopkgMetadata instance
  */
 EopkgMetadata *eopkg_metadata_unref(EopkgMetadata *meta);
+
+DEF_AUTOFREE(EopkgMetadata, eopkg_metadata_unref)
