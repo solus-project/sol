@@ -8,6 +8,24 @@ AM_SILENT_RULES([yes])
 AC_CONFIG_MACRO_DIR([m4])
 LT_INIT
 
+m4_define([libxml_required_version], [2.9.0])
+m4_define([curl_required_version], [7.43.0])
+m4_define([libarchive_required_version], [3.1.2])
+
+# Core database requirements
+PKG_CHECK_MODULES([EOPKG_DB], [
+        libxml-2.0 >= libxml_required_version
+])
+
+# Network requirements
+PKG_CHECK_MODULES([EOPKG_NETWORK], [
+        libcurl >= curl_required_version
+])
+
+# Actual file ops (packages/indexes/etc)
+PKG_CHECK_MODULES([EOPKG_FILES], [
+        libarchive >= libarchive_required_version
+])
 
 AC_CONFIG_FILES([Makefile])
 
