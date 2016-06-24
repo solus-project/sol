@@ -11,6 +11,9 @@
 
 #pragma once
 
+#include <stdbool.h>
+#include <sys/stat.h>
+
 #define __eopkg_unused__ __attribute__((unused))
 #define __eopkg_inline__ __attribute__((always_inline))
 
@@ -28,3 +31,12 @@
         }
 
 #define autofree(N) __attribute__((cleanup(_autofree_func_##N))) N
+
+/**
+ * Determine if a file actually exists or not
+ */
+__eopkg_inline__ static inline bool eopkg_file_exists(const char *p)
+{
+        __eopkg_unused__ struct stat st = { 0 };
+        return stat(p, &st) == 0;
+}
