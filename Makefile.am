@@ -21,10 +21,12 @@ bin_PROGRAMS = 		\
 	eopkg-ng
 
 # Core library
-libeopkg_ng_la_SOURCES = \
-	src/lib/eopkg.h	\
-	src/lib/eopkg.c	\
-	src/lib/util.h
+libeopkg_ng_la_SOURCES = 	\
+	src/lib/eopkg.h		\
+	src/lib/eopkg.c		\
+	src/lib/util.h		\
+	src/lib/xml/metadata.h	\
+	src/lib/xml/metadata.c
 
 libeopkg_ng_la_CFLAGS = \
 	$(AM_CFLAGS)
