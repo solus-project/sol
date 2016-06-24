@@ -47,6 +47,16 @@ x86_64. Therefore there are no **assumptions** for us to make. With this in
 mind, we'll be able to use C11 atomics, `mmap()` and friends, at will.
 
 
+Initial TODO
+------------
+
+Every project needs a TODO list.. let's not get too ambitious yet.
+
+ - [ ] Add all metadata parsing to enable reading old eopkg indexes
+ - [ ] Add `EopkgPackage` so we can actually open an eopkg and parse it
+ - [ ] Add new code for adding a system repo and iterating packages
+
+
 License
 --------
 
