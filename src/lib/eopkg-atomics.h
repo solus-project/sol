@@ -33,7 +33,8 @@ __eopkg_inline__ static inline void *eopkg_atomic_ref(void *v)
         if (!t) {
                 return NULL;
         }
-        atomic_fetch_add(&(t->ref_count), 1);
+        int ref_count = atomic_fetch_add(&(t->ref_count), 1);
+        assert(ref_count >= 0);
         return t;
 }
 
