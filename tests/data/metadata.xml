@@ -1,0 +1,44 @@
+<PISI>
+    <Source>
+        <Name>bash</Name>
+        <Packager>
+            <Name>Ikey Doherty</Name>
+            <Email>ikey@solus-project.com</Email>
+        </Packager>
+    </Source>
+    <Package>
+        <Name>bash</Name>
+        <Summary xml:lang="en">bash (sh-compatible shell)</Summary>
+        <Description xml:lang="en">bash (sh-compatible shell) The GNU Bourne-Again SHell.  Bash is a sh-compatible command interpreter that executes commands read from the standard input or from a file.  Bash also incorporates useful features from the Korn and C shells (ksh and csh).  Bash is ultimately intended to be a conformant implementation of the IEEE Posix Shell and Tools specification (IEEE Working Group 1003.2). Bash must be present for the system to boot properly.
+</Description>
+        <PartOf>system.base</PartOf>
+        <License>GPL-3.0</License>
+        <RuntimeDependencies>
+            <Dependency releaseFrom="8">ncurses</Dependency>
+            <Dependency releaseFrom="29">glibc</Dependency>
+            <Dependency releaseFrom="5">readline</Dependency>
+        </RuntimeDependencies>
+        <History>
+            <Update release="30">
+                <Date>2016-06-23</Date>
+                <Version>4.3.042</Version>
+                <Comment>Packaging update</Comment>
+                <Name>Ikey Doherty</Name>
+                <Email>ikey@solus-project.com</Email>
+            </Update>
+        </History>
+        <BuildHost>solus</BuildHost>
+        <Distribution>Solus</Distribution>
+        <DistributionRelease>1</DistributionRelease>
+        <Architecture>x86_64</Architecture>
+        <InstalledSize>6971430</InstalledSize>
+        <PackageFormat>1.2</PackageFormat>
+        <Source>
+            <Name>bash</Name>
+            <Packager>
+                <Name>Ikey Doherty</Name>
+                <Email>ikey@solus-project.com</Email>
+            </Packager>
+        </Source>
+    </Package>
+</PISI>

@@ -1,6 +1,8 @@
-EXTRA_DIST = 		\
-	LICENSE.LGPL2.1 \
-	README.md
+EXTRA_DIST = 			\
+	LICENSE.LGPL2.1 	\
+	README.md		\
+	tests/data/metadata.xml	\
+	tests/data/files.xml
 
 AM_CPPFLAGS =			\
 	-I $(top_srcdir)/src 	\
