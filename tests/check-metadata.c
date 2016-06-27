@@ -23,6 +23,17 @@ START_TEST(eopkg_metadata_new_test)
 }
 END_TEST
 
+START_TEST(eopkg_metadata_load_test)
+{
+        autofree(EopkgMetadata) *meta = NULL;
+        const char *fname = TOP_DIR "/tests/data/metadata.xml";
+
+        meta = eopkg_metadata_new();
+
+        fail_if(!eopkg_metadata_load(meta, fname), "Failed to load well-formed meta");
+}
+END_TEST
+
 static Suite *core_suite(void)
 {
         Suite *s = NULL;
@@ -31,6 +42,7 @@ static Suite *core_suite(void)
         s = suite_create("eopkg_metadata");
         tc = tcase_create("eopkg_metadata_functions");
         tcase_add_test(tc, eopkg_metadata_new_test);
+        tcase_add_test(tc, eopkg_metadata_load_test);
         suite_add_tcase(s, tc);
 
         return s;
