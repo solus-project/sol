@@ -33,3 +33,8 @@ test-driver
 
 # test binaries
 check_metadata
+
+# coverage cruft
+/coverage/
+*.gcno
+*.gcda

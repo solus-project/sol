@@ -16,6 +16,16 @@ AM_CFLAGS = 							\
 	-Wno-conversion -Wunused-variable -Wunreachable-code 	\
 	-Wall -W -D_FORTIFY_SOURCE=2 -std=c11
 
+if COVERAGE
+coverage:
+	mkdir -p coverage
+	lcov --compat-libtool --directory . --capture --output-file coverage/report
+	lcov --remove coverage/report 'tests/*' '/usr/*' --output-file coverage/report
+	genhtml -o coverage/ coverage/report
+
+AM_CFLAGS += --coverage
+endif
+
 lib_LTLIBRARIES = 	\
 	libeopkg-ng.la
 
