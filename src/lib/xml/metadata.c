@@ -36,3 +36,9 @@ EopkgMetadata *eopkg_metadata_unref(EopkgMetadata *meta)
 {
         return eopkg_atomic_unref(meta);
 }
+
+bool eopkg_metadata_load(EopkgMetadata *meta, __eopkg_unused__ const char *filename)
+{
+        assert(meta != NULL);
+        return false;
+}

@@ -25,4 +25,9 @@ EopkgMetadata *eopkg_metadata_new(void);
  */
 EopkgMetadata *eopkg_metadata_unref(EopkgMetadata *meta);
 
+/**
+ * Load the EopkgMetadata from the given path
+ */
+bool eopkg_metadata_load(EopkgMetadata *meta, const char *filename);
+
 DEF_AUTOFREE(EopkgMetadata, eopkg_metadata_unref)
