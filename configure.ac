@@ -6,6 +6,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_PREFIX_DEFAULT(/usr/local)
 AM_SILENT_RULES([yes])
 AC_CONFIG_MACRO_DIR([m4])
+AX_VALGRIND_CHECK
 LT_INIT
 
 m4_define([libxml_required_version], [2.9.0])

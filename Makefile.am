@@ -65,3 +65,5 @@ check_metadata_LDADD = \
 	libeopkg-ng.la \
 	$(CHECK_LIBS)
 
+@VALGRIND_CHECK_RULES@
+

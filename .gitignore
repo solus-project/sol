@@ -12,7 +12,6 @@ configure
 install-sh
 libtool
 ltmain.sh
-m4/
 missing
 stamp-*
 .deps
@@ -22,6 +21,8 @@ depcomp
 .libs
 *.la
 *.lo
+m4/libtool*
+m4/lt*
 
 eopkg-ng
 
