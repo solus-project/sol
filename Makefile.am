@@ -41,7 +41,9 @@ libeopkg_ng_la_SOURCES = 	\
 	src/lib/util.h		\
 	src/lib/xml/entry.c	\
 	src/lib/xml/metadata.h	\
-	src/lib/xml/metadata.c
+	src/lib/xml/metadata.c  \
+	src/lib/db/install-db.h \
+	src/lib/db/install-db.c
 
 libeopkg_ng_la_CFLAGS = 	\
 	$(EOPKG_DB_CFLAGS)	\
