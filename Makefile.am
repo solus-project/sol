@@ -47,3 +47,21 @@ eopkg_ng_CFLAGS =	\
 
 eopkg_ng_LDADD = 	\
 	libeopkg-ng.la
+
+# Tests
+TESTS = \
+	check_metadata
+
+check_PROGRAMS = $(TESTS)
+
+check_metadata_SOURCES = \
+	tests/check-metadata.c
+
+check_metadata_CFLAGS = \
+	$(CHECK_CFLAGS) \
+	$(AM_CFLAGS)
+
+check_metadata_LDADD = \
+	libeopkg-ng.la \
+	$(CHECK_LIBS)
+

@@ -24,3 +24,11 @@ depcomp
 *.lo
 
 eopkg-ng
+
+# test output
+*.log
+*.trs
+test-driver
+
+# test binaries
+check_metadata

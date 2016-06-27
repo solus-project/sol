@@ -11,6 +11,11 @@ LT_INIT
 m4_define([libxml_required_version], [2.9.0])
 m4_define([curl_required_version], [7.43.0])
 m4_define([libarchive_required_version], [3.1.2])
+m4_define([check_required_version], [0.9.0])
+
+PKG_CHECK_MODULES([CHECK], [
+        check >= check_required_version
+])
 
 # Core database requirements
 PKG_CHECK_MODULES([EOPKG_DB], [
