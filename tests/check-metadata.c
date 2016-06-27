@@ -31,6 +31,11 @@ START_TEST(eopkg_metadata_load_test)
         meta = eopkg_metadata_new();
 
         fail_if(!eopkg_metadata_load(meta, fname), "Failed to load well-formed meta");
+
+        fail_if(!streq(eopkg_metadata_get_package_name(meta), "bash"),
+                "Package name does not match expectation");
+        fail_if(!streq(eopkg_metadata_get_component(meta), "system.base"),
+                "Package PartOf does not match expectation");
 }
 END_TEST
 

@@ -9,16 +9,21 @@
  * of the License, or (at your option) any later version.
  */
 
+#define _GNU_SOURCE
+
 #include <libxml/SAX2.h>
 #include <libxml/parser.h>
 #include <libxml/parserInternals.h>
 #include <stdbool.h>
+#include <string.h>
 
 #include "eopkg-atomics.h"
 #include "metadata.h"
 
 struct EopkgMetadata {
         eopkg_atomic_t eatom;
+        char *package_name;
+        char *component;
 };
 
 typedef enum {
@@ -28,6 +33,7 @@ typedef enum {
         MDATA_HISTORY = 1 << 3,
         MDATA_SOURCE = 1 << 4,
         MDATA_NAME = 1 << 5,
+        MDATA_COMPONENT = 1 << 6,
 } EopkgMetadataParseFlags;
 
 /**
@@ -35,6 +41,7 @@ typedef enum {
  */
 typedef struct EopkgMetadataParseContext {
         EopkgMetadataParseFlags flags;
+        EopkgMetadata *metadata;
 } EopkgMetadataParseContext;
 
 __eopkg_inline__ static inline bool eopkg_sax_in_root(EopkgMetadataParseContext *self)
@@ -81,6 +88,9 @@ static void eopkg_sax_flip_states(EopkgMetadataParseContext *self, const xmlChar
         if (eopkg_sax_flip_state(self, name, "Name", MDATA_NAME)) {
                 return;
         }
+        if (!eopkg_sax_flip_state(self, name, "PartOf", MDATA_COMPONENT)) {
+                return;
+        }
 }
 
 /**
@@ -105,17 +115,31 @@ static void eopkg_sax_end_element(void *udata, const xmlChar *name)
 static void eopkg_sax_characters(void *udata, const xmlChar *ch, int len)
 {
         EopkgMetadataParseContext *self = udata;
-        int package_name_flags = MDATA_ROOT | MDATA_PACKAGE | MDATA_NAME;
-        if (self->flags != package_name_flags) {
+        /* Handle package name */
+        if (self->flags == (MDATA_ROOT | MDATA_PACKAGE | MDATA_NAME)) {
+                self->metadata->package_name = strndup((char *)ch, len);
                 return;
         }
-        xmlChar *nom = xmlStrndup(ch, len);
-        fprintf(stderr, "I have the name, and it is: %s\n", (char *)nom);
-        xmlFree(nom);
+        if (self->flags & MDATA_COMPONENT) {
+                self->metadata->component = strndup((char *)ch, len);
+                return;
+        }
+}
+
+/**
+ * Allow state resets
+ */
+static void eopkg_metadata_clean(EopkgMetadata *self)
+{
+        free(self->package_name);
+        self->package_name = NULL;
+        free(self->component);
+        self->component = NULL;
 }
 
 static void eopkg_metadata_free(EopkgMetadata *self)
 {
+        eopkg_metadata_clean(self);
         free(self);
 }
 
@@ -144,7 +168,7 @@ bool eopkg_metadata_load(EopkgMetadata *meta, const char *filename)
         xmlSAXHandler handler = {.startElement = eopkg_sax_start_element,
                                  .endElement = eopkg_sax_end_element,
                                  .characters = eopkg_sax_characters };
-        EopkgMetadataParseContext instance = { 0 };
+        EopkgMetadataParseContext instance = {.metadata = meta };
         ctx = xmlCreateFileParserCtxt(filename);
         if (!ctx) {
                 fprintf(stderr, "eopkg: Error creating XML context\n");
@@ -165,6 +189,19 @@ bool eopkg_metadata_load(EopkgMetadata *meta, const char *filename)
 
         if (!good) {
                 fprintf(stderr, "eopkg: Badly formed XML file, aborting\n");
+                eopkg_metadata_clean(meta);
         }
         return good;
+}
+
+const char *eopkg_metadata_get_package_name(EopkgMetadata *meta)
+{
+        assert(meta != NULL);
+        return (const char *)meta->package_name;
+}
+
+const char *eopkg_metadata_get_component(EopkgMetadata *meta)
+{
+        assert(meta != NULL);
+        return (const char *)meta->component;
 }

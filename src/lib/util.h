@@ -13,6 +13,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 
 #define __eopkg_unused__ __attribute__((unused))
@@ -40,4 +41,18 @@ __eopkg_inline__ static inline bool eopkg_file_exists(const char *p)
 {
         __eopkg_unused__ struct stat st = { 0 };
         return stat(p, &st) == 0;
+}
+
+/**
+ * String equality, from libnica
+ */
+__eopkg_inline__ static inline bool streq(const char *a, const char *b)
+{
+        if (a == b) {
+                return true;
+        }
+        if (!a || !b) {
+                return false;
+        }
+        return strcmp(a, b) == 0;
 }

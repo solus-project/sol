@@ -30,4 +30,14 @@ EopkgMetadata *eopkg_metadata_unref(EopkgMetadata *meta);
  */
 bool eopkg_metadata_load(EopkgMetadata *meta, const char *filename);
 
+/**
+ * Get the package name
+ */
+const char *eopkg_metadata_get_package_name(EopkgMetadata *meta);
+
+/**
+ * Get the package component
+ */
+const char *eopkg_metadata_get_component(EopkgMetadata *meta);
+
 DEF_AUTOFREE(EopkgMetadata, eopkg_metadata_unref)
