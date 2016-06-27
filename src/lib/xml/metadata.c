@@ -12,6 +12,7 @@
 #include <libxml/SAX2.h>
 #include <libxml/parser.h>
 #include <libxml/parserInternals.h>
+#include <stdbool.h>
 
 #include "eopkg-atomics.h"
 #include "metadata.h"
@@ -20,11 +21,62 @@ struct EopkgMetadata {
         eopkg_atomic_t eatom;
 };
 
+typedef enum {
+        MDATA_MIN = 1 << 0,
+        MDATA_ROOT = 1 << 1,
+        MDATA_PACKAGE = 1 << 2
+} EopkgMetadataParseFlags;
+
+/**
+ * Instance tracking during initial load
+ */
+typedef struct EopkgMetadataParseContext {
+        EopkgMetadataParseFlags flags;
+} EopkgMetadataParseContext;
+
+__eopkg_inline__ static inline bool eopkg_sax_in_root(EopkgMetadataParseContext *self)
+{
+        return (self->flags & MDATA_ROOT) != 0;
+}
+
+__eopkg_inline__ static inline bool eopkg_sax_flip_state(EopkgMetadataParseContext *self,
+                                                         const xmlChar *name, const char *key,
+                                                         EopkgMetadataParseFlags flag)
+{
+        if (!xmlStrEqual(name, BAD_CAST key)) {
+                return false;
+        }
+        self->flags ^= flag;
+        return true;
+}
+
+/**
+ * Handle state flips between close and opens
+ */
+static void eopkg_sax_flip_states(EopkgMetadataParseContext *self, const xmlChar *name)
+{
+        /* Handle root */
+        if (eopkg_sax_flip_state(self, name, "PISI", MDATA_ROOT)) {
+                return;
+        }
+        if (eopkg_sax_flip_state(self, name, "EOPKG", MDATA_ROOT)) {
+                return;
+        }
+        /* Only parse within the root */
+        if (!eopkg_sax_in_root(self)) {
+                return;
+        }
+        if (eopkg_sax_flip_state(self, name, "Package", MDATA_PACKAGE)) {
+                return;
+        }
+}
+
 /**
  * Handle opening of a new element
  */
 static void eopkg_sax_start_element(void *udata, const xmlChar *name, const xmlChar **attrs)
 {
+        eopkg_sax_flip_states(udata, name);
 }
 
 /**
@@ -32,6 +84,7 @@ static void eopkg_sax_start_element(void *udata, const xmlChar *name, const xmlC
  */
 static void eopkg_sax_end_element(void *udata, const xmlChar *name)
 {
+        eopkg_sax_flip_states(udata, name);
 }
 
 /**
@@ -71,6 +124,7 @@ bool eopkg_metadata_load(EopkgMetadata *meta, const char *filename)
         xmlSAXHandler handler = {.startElement = eopkg_sax_start_element,
                                  .endElement = eopkg_sax_end_element,
                                  .characters = eopkg_sax_characters };
+        EopkgMetadataParseContext instance = { 0 };
         ctx = xmlCreateFileParserCtxt(filename);
         if (!ctx) {
                 fprintf(stderr, "eopkg: Error creating XML context\n");
@@ -78,8 +132,7 @@ bool eopkg_metadata_load(EopkgMetadata *meta, const char *filename)
         }
         old = ctx->sax;
         ctx->sax = &handler;
-        /* ctx->userData = &instance; */
-        ctx->userData = NULL;
+        ctx->userData = &instance;
 
         xmlParseDocument(ctx);
         p = ctx->myDoc;
