@@ -17,4 +17,9 @@ EopkgInstallDB *eopkg_install_db_new(void);
 
 EopkgInstallDB *eopkg_install_db_unref(EopkgInstallDB *db);
 
+/**
+ * UNSTABLE API: This will disappear into EopkgContext
+ */
+void eopkg_install_db_load(EopkgInstallDB *db);
+
 DEF_AUTOFREE(EopkgInstallDB, eopkg_install_db_unref)

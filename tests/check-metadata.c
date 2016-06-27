@@ -12,6 +12,7 @@
 #include <check.h>
 #include <stdlib.h>
 
+#include "db/install-db.h"
 #include "xml/metadata.h"
 
 START_TEST(eopkg_metadata_new_test)
@@ -39,6 +40,16 @@ START_TEST(eopkg_metadata_load_test)
 }
 END_TEST
 
+START_TEST(eopkg_installdb_load)
+{
+        autofree(EopkgInstallDB) *db = NULL;
+
+        db = eopkg_install_db_new();
+        fail_if(!db, "Failed to load install-db");
+        eopkg_install_db_load(db);
+}
+END_TEST
+
 static Suite *core_suite(void)
 {
         Suite *s = NULL;
@@ -48,6 +59,7 @@ static Suite *core_suite(void)
         tc = tcase_create("eopkg_metadata_functions");
         tcase_add_test(tc, eopkg_metadata_new_test);
         tcase_add_test(tc, eopkg_metadata_load_test);
+        tcase_add_test(tc, eopkg_installdb_load);
         suite_add_tcase(s, tc);
 
         return s;
