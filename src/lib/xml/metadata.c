@@ -24,7 +24,10 @@ struct EopkgMetadata {
 typedef enum {
         MDATA_MIN = 1 << 0,
         MDATA_ROOT = 1 << 1,
-        MDATA_PACKAGE = 1 << 2
+        MDATA_PACKAGE = 1 << 2,
+        MDATA_HISTORY = 1 << 3,
+        MDATA_SOURCE = 1 << 4,
+        MDATA_NAME = 1 << 5,
 } EopkgMetadataParseFlags;
 
 /**
@@ -69,6 +72,15 @@ static void eopkg_sax_flip_states(EopkgMetadataParseContext *self, const xmlChar
         if (eopkg_sax_flip_state(self, name, "Package", MDATA_PACKAGE)) {
                 return;
         }
+        if (eopkg_sax_flip_state(self, name, "History", MDATA_HISTORY)) {
+                return;
+        }
+        if (eopkg_sax_flip_state(self, name, "Source", MDATA_SOURCE)) {
+                return;
+        }
+        if (eopkg_sax_flip_state(self, name, "Name", MDATA_NAME)) {
+                return;
+        }
 }
 
 /**
@@ -92,6 +104,14 @@ static void eopkg_sax_end_element(void *udata, const xmlChar *name)
  */
 static void eopkg_sax_characters(void *udata, const xmlChar *ch, int len)
 {
+        EopkgMetadataParseContext *self = udata;
+        int package_name_flags = MDATA_ROOT | MDATA_PACKAGE | MDATA_NAME;
+        if (self->flags != package_name_flags) {
+                return;
+        }
+        xmlChar *nom = xmlStrndup(ch, len);
+        fprintf(stderr, "I have the name, and it is: %s\n", (char *)nom);
+        xmlFree(nom);
 }
 
 static void eopkg_metadata_free(EopkgMetadata *self)
