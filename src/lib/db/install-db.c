@@ -18,8 +18,8 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "sol-atomics.h"
 #include "install-db.h"
+#include "sol-atomics.h"
 #include "xml/metadata.h"
 
 #define INSTALL_DB_DISK "/var/lib/sol/package"

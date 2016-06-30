@@ -30,7 +30,7 @@ typedef void (*sol_atomic_free)(void *);
  * construction
  */
 typedef struct sol_atomic_t {
-        atomic_int ref_count;   /**<Current ref count */
+        atomic_int ref_count; /**<Current ref count */
         sol_atomic_free dtor; /**<Deconstructor when ref count hits 0 */
 } sol_atomic_t;
 

@@ -17,8 +17,8 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "sol-atomics.h"
 #include "metadata.h"
+#include "sol-atomics.h"
 
 struct SolMetadata {
         sol_atomic_t eatom;
@@ -50,8 +50,8 @@ __sol_inline__ static inline bool sol_sax_in_root(SolMetadataParseContext *self)
 }
 
 __sol_inline__ static inline bool sol_sax_flip_state(SolMetadataParseContext *self,
-                                                         const xmlChar *name, const char *key,
-                                                         SolMetadataParseFlags flag)
+                                                     const xmlChar *name, const char *key,
+                                                     SolMetadataParseFlags flag)
 {
         if (!xmlStrEqual(name, BAD_CAST key)) {
                 return false;
