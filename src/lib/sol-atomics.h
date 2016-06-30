@@ -52,7 +52,7 @@ __sol_inline__ static inline void *sol_atomic_ref(void *v)
 }
 
 /**
- * Initialse an atomic reference type to a refcount of 1
+ * Initialise an atomic reference type to a refcount of 1
  *
  * @param dtor Deconstructor to call when the refcount hits 0
  * @returns A reference to the object
