@@ -1,4 +1,4 @@
-AC_INIT([eopkg], 0, [ikey@solus-project.com], [eopkg], [https://gitlab.com/solus-project/eopkg])
+AC_INIT([sol], 0, [ikey@solus-project.com], [sol], [https://gitlab.com/solus-project/sol])
 AM_INIT_AUTOMAKE([-Wno-portability no-dist-gzip dist-xz foreign subdir-objects])
 AC_PROG_CC
 AC_PROG_CC_STDC
@@ -19,17 +19,17 @@ PKG_CHECK_MODULES([CHECK], [
 ])
 
 # Core database requirements
-PKG_CHECK_MODULES([EOPKG_DB], [
+PKG_CHECK_MODULES([SOL_DB], [
         libxml-2.0 >= libxml_required_version
 ])
 
 # Network requirements
-PKG_CHECK_MODULES([EOPKG_NETWORK], [
+PKG_CHECK_MODULES([SOL_NETWORK], [
         libcurl >= curl_required_version
 ])
 
 # Actual file ops (packages/indexes/etc)
-PKG_CHECK_MODULES([EOPKG_FILES], [
+PKG_CHECK_MODULES([SOL_FILES], [
         libarchive >= libarchive_required_version
 ])
 
@@ -57,7 +57,7 @@ AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
 
 AC_MSG_RESULT([
-        eopkg $VERSION
+        sol $VERSION
         ========
 
         prefix:                 ${prefix}

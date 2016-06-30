@@ -24,7 +24,7 @@ depcomp
 m4/libtool*
 m4/lt*
 
-eopkg-ng
+sol
 
 # test output
 *.log

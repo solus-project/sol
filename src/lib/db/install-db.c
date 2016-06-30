@@ -1,9 +1,9 @@
 /*
- * This file is part of eopkg.
+ * This file is part of sol.
  *
  * Copyright © 2016 Ikey Doherty <ikey@solus-project.com>
  *
- * eopkg is free software; you can redistribute it and/or modify
+ * sol is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
@@ -18,27 +18,27 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "eopkg-atomics.h"
+#include "sol-atomics.h"
 #include "install-db.h"
 #include "xml/metadata.h"
 
-#define INSTALL_DB_DISK "/var/lib/eopkg/package"
+#define INSTALL_DB_DISK "/var/lib/sol/package"
 
 DEF_AUTOFREE(DIR, closedir)
 
 /**
- * Actual EopkgInstallDB implementation
+ * Actual SolInstallDB implementation
  */
-struct EopkgInstallDB {
-        eopkg_atomic_t eatom;
+struct SolInstallDB {
+        sol_atomic_t eatom;
 };
 
-static inline void eopkg_install_db_free(EopkgInstallDB *self)
+static inline void sol_install_db_free(SolInstallDB *self)
 {
         free(self);
 }
 
-void eopkg_install_db_load(EopkgInstallDB *db)
+void sol_install_db_load(SolInstallDB *db)
 {
         autofree(DIR) *d = NULL;
         assert(db != NULL);
@@ -53,7 +53,7 @@ void eopkg_install_db_load(EopkgInstallDB *db)
         static int load_count = 0;
         while ((ent = readdir(d)) != NULL) {
                 autofree(char) *meta_path = NULL;
-                autofree(EopkgMetadata) *meta = NULL;
+                autofree(SolMetadata) *meta = NULL;
 
                 if (!asprintf(&meta_path,
                               "%s/%s/%s",
@@ -66,33 +66,33 @@ void eopkg_install_db_load(EopkgInstallDB *db)
                 if (access(meta_path, F_OK) != 0) {
                         continue;
                 }
-                meta = eopkg_metadata_new();
-                if (!eopkg_metadata_load(meta, meta_path)) {
+                meta = sol_metadata_new();
+                if (!sol_metadata_load(meta, meta_path)) {
                         fprintf(stderr, "Failed to load: %s\n", meta_path);
                         continue;
                 }
                 ++load_count;
                 fprintf(stderr,
                         "Loaded %s (%s)\n",
-                        eopkg_metadata_get_package_name(meta),
-                        eopkg_metadata_get_component(meta));
+                        sol_metadata_get_package_name(meta),
+                        sol_metadata_get_component(meta));
         }
         fprintf(stderr, "Loaded %d entries\n", load_count);
 }
 
-EopkgInstallDB *eopkg_install_db_new(void)
+SolInstallDB *sol_install_db_new(void)
 {
-        EopkgInstallDB *r = NULL;
+        SolInstallDB *r = NULL;
 
-        r = calloc(1, sizeof(struct EopkgInstallDB));
+        r = calloc(1, sizeof(struct SolInstallDB));
         if (!r) {
                 return NULL;
         }
-        return eopkg_atomic_init((eopkg_atomic_t *)r, (eopkg_atomic_free)eopkg_install_db_free);
+        return sol_atomic_init((sol_atomic_t *)r, (sol_atomic_free)sol_install_db_free);
 }
 
-EopkgInstallDB *eopkg_install_db_unref(EopkgInstallDB *db)
+SolInstallDB *sol_install_db_unref(SolInstallDB *db)
 {
         assert(db != NULL);
-        return eopkg_atomic_unref(db);
+        return sol_atomic_unref(db);
 }

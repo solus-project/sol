@@ -1,9 +1,9 @@
 /*
- * This file is part of eopkg.
+ * This file is part of sol.
  *
  * Copyright © 2016 Ikey Doherty <ikey@solus-project.com>
  *
- * eopkg is free software; you can redistribute it and/or modify
+ * sol is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
@@ -11,15 +11,15 @@
 
 #include "util.h"
 
-typedef struct EopkgInstallDB EopkgInstallDB;
+typedef struct SolInstallDB SolInstallDB;
 
-EopkgInstallDB *eopkg_install_db_new(void);
+SolInstallDB *sol_install_db_new(void);
 
-EopkgInstallDB *eopkg_install_db_unref(EopkgInstallDB *db);
+SolInstallDB *sol_install_db_unref(SolInstallDB *db);
 
 /**
- * UNSTABLE API: This will disappear into EopkgContext
+ * UNSTABLE API: This will disappear into SolContext
  */
-void eopkg_install_db_load(EopkgInstallDB *db);
+void sol_install_db_load(SolInstallDB *db);
 
-DEF_AUTOFREE(EopkgInstallDB, eopkg_install_db_unref)
+DEF_AUTOFREE(SolInstallDB, sol_install_db_unref)

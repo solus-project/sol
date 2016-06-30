@@ -1,9 +1,9 @@
 /*
- * This file is part of eopkg.
+ * This file is part of sol.
  *
  * Copyright © 2016 Ikey Doherty <ikey@solus-project.com>
  *
- * eopkg is free software; you can redistribute it and/or modify
+ * sol is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
@@ -18,31 +18,31 @@
 #include "util.h"
 
 /**
- * Valid unref function for an eopkg atomic
+ * Valid unref function for an sol atomic
  */
-typedef void (*eopkg_atomic_free)(void *);
+typedef void (*sol_atomic_free)(void *);
 
 /**
  * Base type for atomic reference types
  *
- * Ensure the eopkg_atomic_t is the first member in the struct to gain
- * "free" atomic refcounts. Always proxy by eopkg_atomic_init after
+ * Ensure the sol_atomic_t is the first member in the struct to gain
+ * "free" atomic refcounts. Always proxy by sol_atomic_init after
  * construction
  */
-typedef struct eopkg_atomic_t {
+typedef struct sol_atomic_t {
         atomic_int ref_count;   /**<Current ref count */
-        eopkg_atomic_free dtor; /**<Deconstructor when ref count hits 0 */
-} eopkg_atomic_t;
+        sol_atomic_free dtor; /**<Deconstructor when ref count hits 0 */
+} sol_atomic_t;
 
 /**
  * Increase the refcount of a given object by one, atomically.
  *
- * @note: @v is assumed to be an eopkg_atomic_t based struct
+ * @note: @v is assumed to be an sol_atomic_t based struct
  * @returns a reference to the ref'd struct
  */
-__eopkg_inline__ static inline void *eopkg_atomic_ref(void *v)
+__sol_inline__ static inline void *sol_atomic_ref(void *v)
 {
-        eopkg_atomic_t *t = v;
+        sol_atomic_t *t = v;
         if (!t) {
                 return NULL;
         }
@@ -57,12 +57,12 @@ __eopkg_inline__ static inline void *eopkg_atomic_ref(void *v)
  * @param dtor Deconstructor to call when the refcount hits 0
  * @returns A reference to the object
  */
-__eopkg_inline__ static inline void *eopkg_atomic_init(eopkg_atomic_t *atom, eopkg_atomic_free dtor)
+__sol_inline__ static inline void *sol_atomic_init(sol_atomic_t *atom, sol_atomic_free dtor)
 {
         assert(atom->dtor == NULL);
         assert(atomic_load(&(atom->ref_count)) < 1);
         atom->dtor = dtor;
-        return eopkg_atomic_ref(atom);
+        return sol_atomic_ref(atom);
 }
 
 /**
@@ -72,9 +72,9 @@ __eopkg_inline__ static inline void *eopkg_atomic_init(eopkg_atomic_t *atom, eop
  *
  * @returns A reference to the object if the refcount is higher than 0, or NULL
  */
-__eopkg_inline__ static inline void *eopkg_atomic_unref(void *v)
+__sol_inline__ static inline void *sol_atomic_unref(void *v)
 {
-        eopkg_atomic_t *t = v;
+        sol_atomic_t *t = v;
         if (!t) {
                 return NULL;
         }

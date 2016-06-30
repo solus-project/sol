@@ -1,9 +1,9 @@
 /*
- * This file is part of eopkg.
+ * This file is part of sol.
  *
  * Copyright © 2016 Ikey Doherty <ikey@solus-project.com>
  *
- * eopkg is free software; you can redistribute it and/or modify
+ * sol is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
  * published by the Free Software Foundation; either version 2.1
  * of the License, or (at your option) any later version.
@@ -15,38 +15,38 @@
 #include "db/install-db.h"
 #include "xml/metadata.h"
 
-START_TEST(eopkg_metadata_new_test)
+START_TEST(sol_metadata_new_test)
 {
-        autofree(EopkgMetadata) *meta = NULL;
+        autofree(SolMetadata) *meta = NULL;
 
-        meta = eopkg_metadata_new();
-        fail_if(!meta, "Failed to create EopkgMetadata");
+        meta = sol_metadata_new();
+        fail_if(!meta, "Failed to create SolMetadata");
 }
 END_TEST
 
-START_TEST(eopkg_metadata_load_test)
+START_TEST(sol_metadata_load_test)
 {
-        autofree(EopkgMetadata) *meta = NULL;
+        autofree(SolMetadata) *meta = NULL;
         const char *fname = TOP_DIR "/tests/data/metadata.xml";
 
-        meta = eopkg_metadata_new();
+        meta = sol_metadata_new();
 
-        fail_if(!eopkg_metadata_load(meta, fname), "Failed to load well-formed meta");
+        fail_if(!sol_metadata_load(meta, fname), "Failed to load well-formed meta");
 
-        fail_if(!streq(eopkg_metadata_get_package_name(meta), "bash"),
+        fail_if(!streq(sol_metadata_get_package_name(meta), "bash"),
                 "Package name does not match expectation");
-        fail_if(!streq(eopkg_metadata_get_component(meta), "system.base"),
+        fail_if(!streq(sol_metadata_get_component(meta), "system.base"),
                 "Package PartOf does not match expectation");
 }
 END_TEST
 
-START_TEST(eopkg_installdb_load)
+START_TEST(sol_installdb_load)
 {
-        autofree(EopkgInstallDB) *db = NULL;
+        autofree(SolInstallDB) *db = NULL;
 
-        db = eopkg_install_db_new();
+        db = sol_install_db_new();
         fail_if(!db, "Failed to load install-db");
-        eopkg_install_db_load(db);
+        sol_install_db_load(db);
 }
 END_TEST
 
@@ -55,11 +55,11 @@ static Suite *core_suite(void)
         Suite *s = NULL;
         TCase *tc = NULL;
 
-        s = suite_create("eopkg_metadata");
-        tc = tcase_create("eopkg_metadata_functions");
-        tcase_add_test(tc, eopkg_metadata_new_test);
-        tcase_add_test(tc, eopkg_metadata_load_test);
-        tcase_add_test(tc, eopkg_installdb_load);
+        s = suite_create("sol_metadata");
+        tc = tcase_create("sol_metadata_functions");
+        tcase_add_test(tc, sol_metadata_new_test);
+        tcase_add_test(tc, sol_metadata_load_test);
+        tcase_add_test(tc, sol_installdb_load);
         suite_add_tcase(s, tc);
 
         return s;

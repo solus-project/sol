@@ -28,38 +28,38 @@ AM_CFLAGS += --coverage
 endif
 
 lib_LTLIBRARIES = 	\
-	libeopkg-ng.la
+	libsol.la
 
 bin_PROGRAMS = 		\
-	eopkg-ng
+	sol
 
 # Core library
-libeopkg_ng_la_SOURCES = 	\
-	src/lib/eopkg.h		\
-	src/lib/eopkg.c		\
-	src/lib/eopkg-atomics.h	\
-	src/lib/util.h		\
-	src/lib/xml/entry.c	\
+libsol_la_SOURCES = 		\
+	src/lib/sol.h			\
+	src/lib/sol.c			\
+	src/lib/sol-atomics.h	\
+	src/lib/util.h			\
+	src/lib/xml/entry.c		\
 	src/lib/xml/metadata.h	\
 	src/lib/xml/metadata.c  \
 	src/lib/db/install-db.h \
 	src/lib/db/install-db.c
 
-libeopkg_ng_la_CFLAGS = 	\
-	$(EOPKG_DB_CFLAGS)	\
+libsol_la_CFLAGS = 		\
+	$(SOL_DB_CFLAGS)	\
 	$(AM_CFLAGS)
 
-libeopkg_ng_la_LIBADD =		\
-	$(EOPKG_DB_LIBS)
+libsol_la_LIBADD =		\
+	$(SOL_DB_LIBS)
 
-eopkg_ng_SOURCES = 	\
+sol_SOURCES = 	\
 	src/cli/main.c
 
-eopkg_ng_CFLAGS =	\
+sol_CFLAGS =	\
 	$(AM_CFLAGS)
 
-eopkg_ng_LDADD = 	\
-	libeopkg-ng.la
+sol_LDADD = 	\
+	libsol.la
 
 # Tests
 TESTS = \
@@ -75,7 +75,7 @@ check_metadata_CFLAGS = \
 	$(AM_CFLAGS)
 
 check_metadata_LDADD = \
-	libeopkg-ng.la \
+	libsol.la \
 	$(CHECK_LIBS)
 
 @VALGRIND_CHECK_RULES@
