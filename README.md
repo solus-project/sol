@@ -52,9 +52,9 @@ Initial TODO
 
 Every project needs a TODO list.. let's not get too ambitious yet.
 
- - [ ] Rename to something undumb (sol)
+ - [x] Rename to something undumb (sol)
  - [ ] Add all metadata parsing to enable reading old eopkg indexes
- - [ ] Add `EopkgPackage` so we can actually open an eopkg and parse it
+ - [ ] Add `SolPackage` so we can actually open an eopkg and parse it
  - [ ] Add new code for adding a system repo and iterating packages
 
 
