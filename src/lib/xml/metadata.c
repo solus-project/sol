@@ -96,7 +96,8 @@ static void sol_sax_flip_states(SolMetadataParseContext *self, const xmlChar *na
 /**
  * Handle opening of a new element
  */
-static void sol_sax_start_element(void *udata, const xmlChar *name, const xmlChar **attrs)
+static void sol_sax_start_element(void *udata, const xmlChar *name,
+                                  __sol_unused__ const xmlChar **attrs)
 {
         sol_sax_flip_states(udata, name);
 }
@@ -117,11 +118,11 @@ static void sol_sax_characters(void *udata, const xmlChar *ch, int len)
         SolMetadataParseContext *self = udata;
         /* Handle package name */
         if (self->flags == (MDATA_ROOT | MDATA_PACKAGE | MDATA_NAME)) {
-                self->metadata->package_name = strndup((char *)ch, len);
+                self->metadata->package_name = strndup((char *)ch, (size_t)len);
                 return;
         }
         if (self->flags & MDATA_COMPONENT) {
-                self->metadata->component = strndup((char *)ch, len);
+                self->metadata->component = strndup((char *)ch, (size_t)len);
                 return;
         }
 }
