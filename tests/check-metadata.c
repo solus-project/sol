@@ -57,6 +57,7 @@ static Suite *core_suite(void)
 
         s = suite_create("sol_metadata");
         tc = tcase_create("sol_metadata_functions");
+        tcase_set_timeout(tc, 20);
         tcase_add_test(tc, sol_metadata_new_test);
         tcase_add_test(tc, sol_metadata_load_test);
         tcase_add_test(tc, sol_installdb_load);
