@@ -22,7 +22,10 @@
 #include "sol-atomics.h"
 #include "xml/metadata.h"
 
-#define INSTALL_DB_DISK "/var/lib/sol/package"
+/**
+ * Location of legacy packages
+ */
+#define INSTALL_DB_DISK "/var/lib/eopkg/package"
 
 DEF_AUTOFREE(DIR, closedir)
 
@@ -49,7 +52,7 @@ void sol_install_db_load(SolInstallDB *db)
                 return;
         }
 
-        /* ALL DEMO CODE! */
+        /* Testing code at this point */
         static int load_count = 0;
         while ((ent = readdir(d)) != NULL) {
                 autofree(char) *meta_path = NULL;
