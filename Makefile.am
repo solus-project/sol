@@ -13,7 +13,7 @@ AM_CFLAGS = 							\
 	-Wstrict-prototypes -Wundef -fno-common 		\
 	-Werror-implicit-function-declaration 			\
 	-Wformat -Wformat-security -Werror=format-security 	\
-	-Wno-conversion -Wunused-variable -Wunreachable-code 	\
+	-Wconversion -Wunused-variable -Wunreachable-code 	\
 	-Wall -W -D_FORTIFY_SOURCE=2 -std=c11			\
 	-DTOP_DIR=\"$(abs_top_srcdir)\"
 
