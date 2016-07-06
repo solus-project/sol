@@ -17,13 +17,22 @@
 #include "sol.h"
 #include "util.h"
 
+/**
+ * Callback prototype for subcommands, in the style of main()
+ */
 typedef int (*CommandCallback)(int, char **);
 
+/**
+ * Subcommand implementation
+ */
 typedef struct SubCommand {
-        const char *name;
-        CommandCallback cb;
+        const char *name;   /**<Name, i.e. "version" */
+        CommandCallback cb; /**<Pointer to the actual callback */
 } SubCommand;
 
+/**
+ * Print the current version of sol and exit
+ */
 static int print_version(__sol_unused__ int argc, __sol_unused__ char **argv)
 {
         fputs("sol - version " PACKAGE_VERSION "\n\n", stdout);
@@ -39,8 +48,15 @@ static int print_version(__sol_unused__ int argc, __sol_unused__ char **argv)
         return EXIT_SUCCESS;
 }
 
+/**
+ * Currently accepted set of commands
+ */
 static const struct SubCommand commands[] = { { "version", &print_version }, { 0 } };
 
+/**
+ * Lookup a static command without requiring a heap allocated hashmap.
+ * Slower, but cheap.
+ */
 static const SubCommand *lookup_command(const char *key)
 {
         const SubCommand *command = NULL;

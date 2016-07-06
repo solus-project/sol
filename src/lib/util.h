@@ -16,7 +16,14 @@
 #include <string.h>
 #include <sys/stat.h>
 
+/**
+ * Variable is unused for now, useful during development
+ */
 #define __sol_unused__ __attribute__((unused))
+
+/**
+ * Force the method to always inline
+ */
 #define __sol_inline__ __attribute__((always_inline))
 
 /**
@@ -32,9 +39,17 @@
                 }                                                                                  \
         }
 
+/**
+ * Make use of __attribute__((cleanup(x))) functionality with a previously
+ * declared autofree handler, by way of DEF_AUTOFREE
+ */
 #define autofree(N) __attribute__((cleanup(_autofree_func_##N))) N
 
+/**
+ * Determine size of static arrays
+ */
 #define ARRAY_SIZE(x) (sizeof(x) / sizeof(x[0]))
+
 /**
  * Determine if a file actually exists or not
  */
@@ -58,4 +73,8 @@ __sol_inline__ static inline bool streq(const char *a, const char *b)
         return strcmp(a, b) == 0;
 }
 
+/**
+ * Define an autofree() handler, which must take a pointer to the given
+ * type
+ */
 DEF_AUTOFREE(char, free)
