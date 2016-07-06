@@ -26,6 +26,9 @@ struct SolMetadata {
         char *component;
 };
 
+/**
+ * Known/accepted major keys in a metadata.xml document
+ */
 typedef enum {
         MDATA_MIN = 1 << 0,
         MDATA_ROOT = 1 << 1,
@@ -34,7 +37,30 @@ typedef enum {
         MDATA_SOURCE = 1 << 4,
         MDATA_NAME = 1 << 5,
         MDATA_COMPONENT = 1 << 6,
+        MDATA_PACKAGER = 1 << 7,
+        MDATA_EMAIL = 1 << 8,
 } SolMetadataParseFlags;
+
+/**
+ * Lightweight key to flag mapping
+ */
+
+typedef struct MetaMap {
+        const char *key;
+        SolMetadataParseFlags flag;
+} MetaMap;
+
+/**
+ * Currently accepted keys mapped to their bitwise value
+ */
+static const MetaMap meta_mapping[] = { { "Package", MDATA_PACKAGE },
+                                        { "History", MDATA_HISTORY },
+                                        { "Source", MDATA_SOURCE },
+                                        { "Name", MDATA_NAME },
+                                        { "PartOf", MDATA_COMPONENT },
+                                        { "Packager", MDATA_PACKAGER },
+                                        { "Email", MDATA_EMAIL },
+                                        { 0 } };
 
 /**
  * Instance tracking during initial load
@@ -49,6 +75,9 @@ __sol_inline__ static inline bool sol_sax_in_root(SolMetadataParseContext *self)
         return (self->flags & MDATA_ROOT) != 0;
 }
 
+/**
+ * Simply flip the state for the given @flag if the @name matches @key
+ */
 __sol_inline__ static inline bool sol_sax_flip_state(SolMetadataParseContext *self,
                                                      const xmlChar *name, const char *key,
                                                      SolMetadataParseFlags flag)
@@ -66,30 +95,22 @@ __sol_inline__ static inline bool sol_sax_flip_state(SolMetadataParseContext *se
 static void sol_sax_flip_states(SolMetadataParseContext *self, const xmlChar *name)
 {
         /* Handle root */
-        if (sol_sax_flip_state(self, name, "PISI", MDATA_ROOT)) {
-                return;
-        }
-        if (sol_sax_flip_state(self, name, "SOL", MDATA_ROOT)) {
+        if (sol_sax_flip_state(self, name, "PISI", MDATA_ROOT) ||
+            sol_sax_flip_state(self, name, "SOL", MDATA_ROOT)) {
                 return;
         }
         /* Only parse within the root */
         if (!sol_sax_in_root(self)) {
                 return;
         }
-        if (sol_sax_flip_state(self, name, "Package", MDATA_PACKAGE)) {
-                return;
-        }
-        if (sol_sax_flip_state(self, name, "History", MDATA_HISTORY)) {
-                return;
-        }
-        if (sol_sax_flip_state(self, name, "Source", MDATA_SOURCE)) {
-                return;
-        }
-        if (sol_sax_flip_state(self, name, "Name", MDATA_NAME)) {
-                return;
-        }
-        if (!sol_sax_flip_state(self, name, "PartOf", MDATA_COMPONENT)) {
-                return;
+
+        for (size_t i = 0; i < ARRAY_SIZE(meta_mapping); i++) {
+                if (!meta_mapping[i].key) {
+                        break;
+                }
+                if (sol_sax_flip_state(self, name, meta_mapping[i].key, meta_mapping[i].flag)) {
+                        return;
+                }
         }
 }
 
