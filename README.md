@@ -1,7 +1,9 @@
 sol
 -----
 
-Gradual clean-room implementation of Solus 2's package manager.
+`sol` is a [Solus project](https://solus-project.com/), a gradual clean-room implementation of the Solus package manager, written in modern, clean C.
+
+![logo](https://build.solus-project.com/logo.png)
 
 
 **History**
