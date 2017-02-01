@@ -63,6 +63,6 @@ Every project needs a TODO list.. let's not get too ambitious yet.
 License
 --------
 
-Copyright © 2016 Ikey Doherty
+Copyright © 2016-2017 Ikey Doherty
 
 LGPL-2.1. We're going to expose a library for others to use....
