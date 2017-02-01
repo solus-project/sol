@@ -60,9 +60,9 @@ __sol_inline__ static inline void *sol_atomic_ref(void *v)
 __sol_inline__ static inline void *sol_atomic_init(sol_atomic_t *atom, sol_atomic_free dtor)
 {
         assert(atom->dtor == NULL);
-        assert(atomic_load(&(atom->ref_count)) < 1);
+        atom->ref_count = ATOMIC_VAR_INIT(1);
         atom->dtor = dtor;
-        return sol_atomic_ref(atom);
+        return atom;
 }
 
 /**
