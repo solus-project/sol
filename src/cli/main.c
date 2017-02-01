@@ -66,7 +66,7 @@ static const SubCommand *lookup_command(const char *key)
                 if (!command->name) {
                         continue;
                 }
-                if (strcmp(key, command->name) != 0) {
+                if (streq(key, command->name)) {
                         continue;
                 }
                 return command;
