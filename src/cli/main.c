@@ -1,7 +1,7 @@
 /*
  * This file is part of sol.
  *
- * Copyright © 2016 Ikey Doherty <ikey@solus-project.com>
+ * Copyright © 2016-2017 Ikey Doherty <ikey@solus-project.com>
  *
  * sol is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as
@@ -36,13 +36,13 @@ typedef struct SubCommand {
 static int print_version(__sol_unused__ int argc, __sol_unused__ char **argv)
 {
         fputs("sol - version " PACKAGE_VERSION "\n\n", stdout);
-        fputs("Copyright © 2016 Ikey Doherty\n\n", stdout);
+        fputs("Copyright © 2016-2017 Ikey Doherty\n\n", stdout);
 
         fputs(
             "sol is free software; you can redistribute it and/or modify\n"
             "it under the terms of the GNU Lesser General Public License as\n"
             "published by the Free Software Foundation; either version 2.1\n"
-            " of the License, or (at your option) any later version.\n",
+            "of the License, or (at your option) any later version.\n",
             stdout);
 
         return EXIT_SUCCESS;
