@@ -1,10 +1,5 @@
 sol
------
-
-`sol` is a [Solus project](https://solus-project.com/), a gradual clean-room implementation of the Solus package manager, written in modern, clean C.
-
-![logo](https://build.solus-project.com/logo.png)
-
+----
 
 **History**
 
@@ -48,6 +43,9 @@ Solus already knows the devices it will be on. These are 64-bit machines, i.e.
 x86_64. Therefore there are no **assumptions** for us to make. With this in
 mind, we'll be able to use C11 atomics, `mmap()` and friends, at will.
 
+`sol` is a [Solus project](https://solus-project.com/)
+
+![logo](https://build.solus-project.com/logo.png)
 
 Initial TODO
 ------------
@@ -55,9 +53,12 @@ Initial TODO
 Every project needs a TODO list.. let's not get too ambitious yet.
 
  - [x] Rename to something undumb (sol)
- - [ ] Add all metadata parsing to enable reading old eopkg indexes
- - [ ] Add `SolPackage` so we can actually open an eopkg and parse it
- - [ ] Add new code for adding a system repo and iterating packages
+ - [ ] Add basic container format
+ - [ ] Implement basic install/remove ops
+ - [ ] Add first abstract DB implementation
+ - [ ] Start adding networking
+ - [ ] Introduce repo format + handling
+ - [ ] Add stuff to this TODO.
 
 
 License
