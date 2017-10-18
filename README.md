@@ -1,47 +1,23 @@
 sol
 ----
 
-**History**
+Replacement for `eopkg`, the Solus package manager (a fork of eopkg).
 
-Solus adopted the PiSi package manager initially due to it's simplistic
-concepts, and a break-away from the traditional package manager. After
-yet-another-naming-dispute, another group rose to claim the ~~ring of power~~
-name as rightfully theirs. In truth, the name is kinda awful in English.
-So, we went with a full fork approach and renamed it to **eopkg**.
+This is not an effort to create "yet another package manager", it is instead
+a current research effort for the successor to `eopkg`, to create a modern
+package manager to deal with the needs of today, and of Solus itself.
 
-Quite simply, that meant *Evolve OS Package*. Because, due to yet-another-naming-dispute,
-we used to be Evolve OS too. But anywho..
+ - Spend less time downloading
+ - Spend less time applying updates
+ - Don't ever break. (ABI, layout, config, etc.)
 
-**Divergence**
+The Solus mantra is "Install today, update forever". We need a modern software
+and update management system to handle this in the most efficient manner for
+the user, to truly handle the needs of a modern rolling release designed for
+the ordinary user.
 
-Shortly after adopting PiSi and renaming to eopkg, we immediately landed features
-to, well, make it more useful. These included automatic runtime binary dependencies,
-better debuginfo, support for pkg-config names, enhanced emul32 support, etc.
-Thus, they stopped being compatible ~~and the ring fell from all knowledge~~.
-
-**Problem**
-
-    Python is really f*****g slow. Don't use it for system-level components.
-
-This is actually compounded when we introduce complex dependency graphs and
-what can only be described as an excessive use of XML through a piss-poor-parser.
-
-**Solution**
-
-    One C To Rule Them All.
-
-Pretty much it, really. Tie all the bits we do like, remove all the crap we
-severely dislike (Sorry comar, you suck), write it all in C and voila. Bespoke,
-high performance package management for Solus, driven solely by Solus ideals,
-with a view towards transactional usage and global Solus philosophy such as
-*being stateless*. We'll add support for postinstalls but they'll be used
-sparingly, and where possible the PM will pick up the bits it needs to.
-
-**Advantages**
-
-Solus already knows the devices it will be on. These are 64-bit machines, i.e.
-x86_64. Therefore there are no **assumptions** for us to make. With this in
-mind, we'll be able to use C11 atomics, `mmap()` and friends, at will.
+More details will be fleshed out as and when we've settled on them. In the
+mean time, don't panic. :]
 
 `sol` is a [Solus project](https://solus-project.com/)
 
