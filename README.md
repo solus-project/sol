@@ -29,6 +29,7 @@ Initial TODO
 Every project needs a TODO list.. let's not get too ambitious yet.
 
  - [x] Rename to something undumb (sol)
+ - [ ] Kill autotools with a shovel
  - [ ] Move most of the existing eopkg code into a `Migration` system.
  - [ ] Add basic container format
  - [ ] Implement basic install/remove ops
