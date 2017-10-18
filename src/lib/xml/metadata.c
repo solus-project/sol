@@ -187,10 +187,10 @@ bool sol_metadata_load(SolMetadata *meta, const char *filename)
         xmlParserCtxtPtr ctx = NULL;
         xmlDocPtr p = NULL;
         xmlSAXHandler *old = NULL;
-        xmlSAXHandler handler = {.startElement = sol_sax_start_element,
-                                 .endElement = sol_sax_end_element,
-                                 .characters = sol_sax_characters };
-        SolMetadataParseContext instance = {.metadata = meta };
+        xmlSAXHandler handler = { .startElement = sol_sax_start_element,
+                                  .endElement = sol_sax_end_element,
+                                  .characters = sol_sax_characters };
+        SolMetadataParseContext instance = { .metadata = meta };
         ctx = xmlCreateFileParserCtxt(filename);
         if (!ctx) {
                 fprintf(stderr, "sol: Error creating XML context\n");
