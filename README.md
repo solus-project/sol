@@ -19,9 +19,9 @@ the ordinary user.
 More details will be fleshed out as and when we've settled on them. In the
 mean time, don't panic. :]
 
-`sol` is a [Solus project](https://solus-project.com/)
+`sol` is a [Solus project](https://getsol.us/)
 
-![logo](https://build.solus-project.com/logo.png)
+![logo](https://build.getsol.us/logo.png)
 
 Initial TODO
 ------------
